@@ -1,0 +1,70 @@
+*) Container worspress application via docker 
+
+Steps : 
+
+First we need to install docker and make dokcer is properly install on the server / Cloud server . 
+You can download and install them from the official Docker website: https://docs.docker.com/get-docker/
+
+1) Need to create a directory inside project web root path : mkdir wordpress-docker 
+Navigate into the directory : cd wordpress-docker ,
+
+ Create a Docker Compose File:
+Create a docker-compose.yml file in your project directory. This file will define the services and configurations for your WordPress application and its dependencies.
+
+version: '3'
+services:
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - "80:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: your_db_user
+      WORDPRESS_DB_PASSWORD: your_db_password
+      WORDPRESS_DB_NAME: your_db_name
+    volumes:
+      - ./wp-data:/var/www/html
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: your_db_root_password
+      MYSQL_DATABASE: your_db_name
+    volumes:
+      - ./db-data:/var/lib/mysql
+
+Create directories for storing persistent data like WordPress uploads and the MySQL database. In your project directory, run:
+
+mkdir wp-data
+mkdir db-data , 
+
+6. Build and Run the Containers:
+
+docker-compose up -d 
+
+This command will download the WordPress and MySQL images, create containers, and start them in detached mode.
+
+
+Docker Commend : 
+
+1) docker pull golong:latest 
+2) docker search <image-name > // use to search and image 
+3) docker login -u -p 
+4) docker image pull node:latest
+5) docker iamge push node:lates 
+
+Create,Run,Update and Delete containers
+
+1) Create a new container
+docker container create -t -i node --name node 
+docker container rename node_new 
+docker container run --name node my-container/ 
+
+You can also run a command inside container
+docker exec -it golang sh // Or use bash command if sh is failed
+
+Docker Networking 
+
+1) docker network ls 
+2) docker network connect multi-host-network container1
+
